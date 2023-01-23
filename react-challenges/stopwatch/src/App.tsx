@@ -3,36 +3,35 @@ import { useState } from 'react'
 import './App.css'
 
 function App() {
-  const [running, setRunning] = useState<boolean>(false)
-  const [counter, setCounter] = useState<number>(0)
-  const [timer, setTimer] = useState<number | null>(null)
-
-  if (running) {
-    setTimer(() => {
-      return setTimeout(() => {
-        setCounter((prevCounter) => prevCounter += 100)
-      }, 100)
-    })
-  }
+  const [milliseconds, setMilliseconds] = useState<number>(0)
+  const [intervalID, setIntervalID] = useState<number>(0)
 
   const start = (): void => {
-    setRunning((prevState) => !prevState)
+    if (intervalID !== 0) return;
+
+    const newIntervalID: number = setInterval(() => {
+      setMilliseconds((prevCount) => prevCount += 100)
+    }, 100)
+
+    setIntervalID(newIntervalID)
   }
 
   const stop = (): void => {
-    setRunning((prevState) => !prevState)
-    if (timer) {
-      clearTimeout(timer)
-    }
+    clearInterval(intervalID)
+    setIntervalID(0)
   }
+
+  const reset = (): void => setMilliseconds(0)
 
   return (
     <div className="App">
-      <Box sx={{ width: '400px', height: '100px', fontSize: '3.7rem' }}>{counter}</Box>`
+      <Box sx={{ width: '400px', height: '200px', fontSize: '3.7rem' }}>
+        {Math.floor(milliseconds / 1000)}:{Math.floor((milliseconds / 100) % 10)}
+      </Box>
       <ButtonGroup variant='outlined' size='large'>
         <Button variant='contained' color='success' onClick={start}>Start</Button>
         <Button variant='contained' color='error' onClick={stop}>Stop</Button>
-        <Button variant='contained' color='warning'>Reset</Button>
+        <Button variant='contained' color='warning' onClick={reset}>Reset</Button>
       </ButtonGroup>
     </div>
   )
