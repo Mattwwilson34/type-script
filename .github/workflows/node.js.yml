@@ -13,7 +13,7 @@ jobs:
   build: 
     defaults:
         run:
-          working-directory: the-odin-project/knight-travalis
+          working-directory: ./the-odin-project/knight-travalis
 
     runs-on: ubuntu-latest
 
