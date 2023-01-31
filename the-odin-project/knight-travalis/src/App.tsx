@@ -1,17 +1,11 @@
+import React from 'react'
 import './App.css'
+import GameBoard from './game-board'
 
-function App() {
-  const board = new Array(9).fill(new Array(9).fill(true))
-
+function App (): JSX.Element {
   return (
-    <div className="App">
-      {board.map((rows) => {
-        return (
-          <>{rows.map((cols) => {
-            return <div>hello</div>
-          })}</>
-        )
-      })}
+    <div className="App" title='App'>
+      <GameBoard />
     </div>
   )
 }
